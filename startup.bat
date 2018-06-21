@@ -1,0 +1,1 @@
+Powershell.exe -executionpolicy remotesigned C:\Users\Administrator\Desktop\DSC_TertittenSAAS\03.ResumeDSC.ps1 >> "C:\StartupLog.txt" 2>&1
