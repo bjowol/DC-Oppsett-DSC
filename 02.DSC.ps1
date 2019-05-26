@@ -144,7 +144,7 @@ Configuration ServerConf {
             LeaseDuration = $DHCP_LeaseDuration
             State = 'Active'
             AddressFamily = 'IPv4'
-
+            ScopeId = $ScopeID
         }
 
         xDhcpServerOption Option {
@@ -171,7 +171,13 @@ Configuration ServerConf {
            IPAddress = $IP
            DnsName = $DomainName.Split('.')[0] #muligens en feil her
         }
-        
+        xDNSServerAddress DNSServeraddress {
+            DependsOn = '[xDhcpServerAuthorization]Authorize'
+            InterfaceAlias = $InternetAlias
+            AddressFamily = 'IPv4'
+            Validate = $true
+            Address = '172.31.7.1,1.1.1.1,9.9.9.9'
+        }
     }   
 }
 
