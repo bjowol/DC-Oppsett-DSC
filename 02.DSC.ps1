@@ -55,12 +55,12 @@ Configuration ServerConf {
         )
     #$Password = (Get-Credential -UserName 'Nisse' -Message 'Enter New Password for $UserName')
 
-    $resources = 'xNetworking','xComputerManagement','xActiveDirectory','xDHCpServer'#,'xSmbShare'
-    Import-DscResource -module $resources
-    # Import-DscResource -Module xNetworking
-    # Import-DscResource -Module xComputerManagement
-    # Import-DscResource -Module xActiveDirectory
-    # Import-DscResource -Module xDHCpServer
+    # $resources = 'xNetworking','xComputerManagement','xActiveDirectory','xDHCpServer'#,'xSmbShare'
+    # Import-DscResource -module $resources
+    Import-DscResource -Module xNetworking
+    Import-DscResource -Module xComputerManagement
+    Import-DscResource -Module xActiveDirectory
+    Import-DscResource -Module xDHCpServer
     # Import-DscResource -Module xSmbShare
 
     Import-DscResource –ModuleName PSDesiredStateConfiguration
@@ -78,9 +78,9 @@ Configuration ServerConf {
 
         xIPAddress NewIPAddress {
             DependsOn = '[xComputer]NewName' 
-            IPAddress = $IP
+            IPAddress = "$($IP)/$($SubnetMask)"
             InterfaceAlias = $InternetAlias
-            SubnetMask = $SubnetMask
+            # SubnetMask = $SubnetMask
             AddressFamily = "IPV4"
         }
 
