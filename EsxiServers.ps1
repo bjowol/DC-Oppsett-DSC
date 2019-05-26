@@ -1,7 +1,7 @@
 ﻿$viserver =connect-viserver -Credential (Get-Credential -Message "Vi server credentials") -Server OC-VCSA01.hverven.local
 
-$template = Get-Template -Name TemplateProve
-$osconfig = Get-OSCustomizationSpec -Name TemplateProve
+$template = Get-Template -Name OC-LAB-S-01TemplatePatched
+$osconfig = Get-OSCustomizationSpec -Name w10-TemplateProve
 $vmhost = (get-vm -name OC-LAB-01).vmhost
 
 
@@ -13,7 +13,7 @@ foreach ($Number in $NumberOfServers) {
 
 foreach ($Server in $Servers) {
     Write-Output ("Setting up server {0}" -f $Server)
-    New-VM -Name $Server -Template $template -OSCustomizationSpec $osconfig -VMHost $vmhost -BootDevice
+    New-VM -Name $Server -Template $template -OSCustomizationSpec $osconfig -VMHost $vmhost
 
 }
 

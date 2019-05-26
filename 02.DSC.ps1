@@ -55,11 +55,13 @@ Configuration ServerConf {
         )
     #$Password = (Get-Credential -UserName 'Nisse' -Message 'Enter New Password for $UserName')
 
-    Import-DscResource -Module xNetworking
-    Import-DscResource -Module xComputerManagement
-    Import-DscResource -Module xActiveDirectory
-    Import-DscResource -Module xDHCpServer
-    Import-DscResource -Module xSmbShare
+    $resources = 'xNetworking','xComputerManagement','xActiveDirectory','xDHCpServer','xSmbShare'
+    Import-DscResource -module $resources
+    # Import-DscResource -Module xNetworking
+    # Import-DscResource -Module xComputerManagement
+    # Import-DscResource -Module xActiveDirectory
+    # Import-DscResource -Module xDHCpServer
+    # Import-DscResource -Module xSmbShare
 
     Import-DscResource –ModuleName PSDesiredStateConfiguration
 
