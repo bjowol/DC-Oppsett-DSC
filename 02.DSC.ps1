@@ -61,11 +61,17 @@ Configuration ServerConf {
     Import-DscResource -Module xComputerManagement
     Import-DscResource -Module xActiveDirectory
     Import-DscResource -Module xDHCpServer
+    Import-DscResource -Module xPowerShellExecutionPolicy
     # Import-DscResource -Module xSmbShare
 
     Import-DscResource –ModuleName PSDesiredStateConfiguration
 
     Node $NodeName {
+
+        xPowerShellExecutionPolicy ExecutionPolicy {
+            ExecutionPolicy = "Bypass"
+
+        }
 
         LocalConfigurationManager {
             RebootNodeIfNeeded = $true
