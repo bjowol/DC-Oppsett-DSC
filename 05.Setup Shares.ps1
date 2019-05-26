@@ -1,8 +1,8 @@
 ﻿#Sharename     #Tilgang
 $smb_shares = @()
 $smb_shares += @{"HomeFolders" = "DP.localGroup"}
-$smb_shares += @{"Administrasjon"= "AdministrasjonGroup"}
-$smb_shares += @{"Interaksjonsdesign"= "InteraksjonsdesignGroup"}
+$smb_shares += @{"Konsulenter"= "KonsulenterGroup"}
+$smb_shares += @{"Ledelse"= "LedelseGroup"}
 $smb_shares += @{"Systemutvikling"="SystemutviklingGroup"}
 $smb_shares += @{"Salg"="SalgGroup"}
 $smb_shares += @{"Felles"="DP.localGroup"}
