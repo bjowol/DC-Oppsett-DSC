@@ -1,8 +1,8 @@
 <#
 en typisk struktur ser slik  ut:
-$OU = "Tertitten.no"                        <-- Domenenavn her
+$OU = "DP.local"                        <-- Domenenavn her
 $SubOUs =   "Administrasjon",               <-- Diverse avdelinger her kan splittes ved en "/", men bare i en underavdeling
-            "Interaksjonsdesign",
+            "Konsulenter",
             "Systemutvikling",
             "Salg",
             "Ledelse",
@@ -12,9 +12,9 @@ $SubOUs =   "Administrasjon",               <-- Diverse avdelinger her kan split
             "Enheter/Servere"
 #>
 
-$OU = "Tertitten.no"
+$OU = "DP.local"
 $SubOUs =   "Administrasjon",
-            "Interaksjonsdesign",
+            "Konsulenter",
             "Systemutvikling",
             "Salg",
             "Ledelse",

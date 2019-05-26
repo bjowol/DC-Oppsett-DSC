@@ -1,15 +1,24 @@
 ﻿Import-Module ActiveDirectory
 
 #variabel som må endres til bruk. dette er gruppen i AD brukerene skal legges inn i
-$DomainUserGroup = "Tertitten.noGroup"
+$DomainUserGroup = "DP.localGroup"
 
 $ServerName = $env:COMPUTERNAME;
 $Users = Import-Csv -Delimiter ';' -Path "$PSScriptRoot\Users\Users.csv"
 $Users = Import-Csv -Delimiter ';' -Path ".\Users\Users.csv"
 
 $RootDN = (Get-ADDomain).DistinguishedName
-$RootHomeFolderShare = 'C:\Shares\HomeFolders'
 $DomainName = (Get-ADDomain).DNSRoot
+$RootHomeFolderShare = 'Z:\Shares\HomeFolders'
+
+if(-not(Test-Path -Path $RootHomeFolderShare)){
+    try {
+        New-Item -ItemType Directory -Path $RootHomeFolderShare
+    }
+    catch {
+        throw $_
+    }
+}
 
 foreach ($user in $Users) {
     $OU = $user.OU
@@ -41,31 +50,27 @@ foreach ($user in $Users) {
         Add-ADGroupMember "$($TmpOU)Group" $SAM
     }
 
-    #if((Test-Path $HomeFolderPath) -eq $true) {
-         #Write-Error "Failed creating Home Folder for $SAM ($fullName)... Please create this manually"
-   # } else {
-        #Gir brukeren full tilgang til mappen sin
-        New-Item $HomeFolderPath -type Directory
+    #Gir brukeren full tilgang til mappen sin
+    New-Item $HomeFolderPath -type Directory
 
-        #Skruer av tilgang inheritence
-        $acl = Get-Acl $HomeFolderPath
-        $acl.SetAccessRuleProtection($true, $true);
-        Set-Acl $HomeFolderPath $acl
+    #Skruer av tilgang inheritence
+    $acl = Get-Acl $HomeFolderPath
+    $acl.SetAccessRuleProtection($true, $true);
+    Set-Acl $HomeFolderPath $acl
 
-        #Henter tilgangene soim er konfigurert på mappen
-        $acl = Get-Acl $HomeFolderPath
+    #Henter tilgangene soim er konfigurert på mappen
+    $acl = Get-Acl $HomeFolderPath
 
-        #Fjenrer alle tilganger som er tildelt på mappen for å starte fra scratch
-        $acl.Access | %{$acl.RemoveAccessRule($_)}
+    #Fjenrer alle tilganger som er tildelt på mappen for å starte fra scratch
+    $acl.Access | %{$acl.RemoveAccessRule($_)}
 
-        #Gir brukeren og Administrators full tilgang til mappen
-        $Ar = New-Object System.Security.AccessControl.FileSystemAccessRule($SAM,'Modify','ContainerInherit, ObjectInherit','None','Allow');
-        $acl.SetAccessRule($Ar);
-        $Ar = New-Object System.Security.AccessControl.FileSystemAccessRule("Administrators",'Modify','ContainerInherit, ObjectInherit','None','Allow');
-        $acl.SetAccessRule($Ar);
+    #Gir brukeren og Administrators full tilgang til mappen
+    $Ar = New-Object System.Security.AccessControl.FileSystemAccessRule($SAM,'Modify','ContainerInherit, ObjectInherit','None','Allow');
+    $acl.SetAccessRule($Ar);
+    $Ar = New-Object System.Security.AccessControl.FileSystemAccessRule("Administrators",'Modify','ContainerInherit, ObjectInherit','None','Allow');
+    $acl.SetAccessRule($Ar);
 
-        #Applyer tilgangene til mappen
-        Set-Acl $HomeFolderPath $acl
-   # }
+    #Applyer tilgangene til mappen
+    Set-Acl $HomeFolderPath $acl
     
     }

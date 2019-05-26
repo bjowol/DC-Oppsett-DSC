@@ -6,7 +6,7 @@ startup.bat Her må du forsikre deg om at startup.bat inneholder riktig path til
 04.Create OUs.ps1 Her må du endre på din OU struktur. Domenenavn skal være øverst. Deretter følgende:
 <#
 en typisk struktur ser slik  ut:
-$OU = "Tertitten.no"                        <-- Domenenavn her
+$OU = "DP.local"                        <-- Domenenavn her
 $SubOUs =   "Administrasjon",               <-- Diverse avdelinger her kan splittes ved en "/", men bare i en underavdeling
             "Interaksjonsdesign",
             "Systemutvikling",
@@ -20,12 +20,12 @@ $SubOUs =   "Administrasjon",               <-- Diverse avdelinger her kan split
 Du kan bare lage SUB'ous en gang. Ikke bruk flere / for å bla lenger ned i OU strukturen, scriptet er ikke laget for det.
 05.Setup Shares.ps1 her må du endre på sharenavn, og gruppenavnene skal hete det samme som OU navnet+Group på slutten.
                #Sharename     #Tilgang
-$smb_shares = ("HomeFolders", "Tertitten.noGroup"), `
+$smb_shares = ("HomeFolders", "DP.localGroup"), `
 ("Administrasjon", "AdministrasjonGroup"), `
 ("Interaksjonsdesign", "InteraksjonsdesignGroup"), `
 ("Systemutvikling","SystemutviklingGroup"), `
 ("Salg","SalgGroup"), `
-("Felles","Tertitten.noGroup"),
+("Felles","DP.localGroup"),
 ("Ledelse","LedelseGroup")
 
 07. WDS Installasjon_med_capture_image.ps1 her må det endres på markerte steder.
