@@ -2,7 +2,7 @@
 Install-WindowsFeature -Name WDS -IncludeManagementTools
     
 # MAA ENDRE SERVER:<NAVN>
-WDSUTIL /Verbose /Progress /Initialize-Server /Server:TittenDC01 /RemInst:"C:\RemoteInstall" 
+WDSUTIL /Verbose /Progress /Initialize-Server /Server:DP-DC01 /RemInst:"C:\RemoteInstall" 
 
 #Sjekker og lager mappe til .wim filene
 $TestPath = "C:\BootAndInstall"
@@ -32,14 +32,14 @@ WDSUTIL /Add-Image /ImageFile:"C:\BootAndInstall\install.wim" /ImageType:Install
     ## Endre ":Server" til 
 
 #starter tjenesten
-WDSUTIL /Start-server /server:TittenDC01
+WDSUTIL /Start-server /server:DP-DC01
 
 #Aktiverer og gjør klar tjenesten til å akkseptere tanke forespørsler.
 WDSUTIL /Set-Server /NewMachineDomainJoin:Yes /AnswerClients:All /ResponseDelay:4
 
 #Må endre OU-Location
 #Plasserer alle nye klienter under "OU=Computers,OU=FHS.Local,DC=fhs,DC=local"
-WDSUTIL /Set-Server /newMachineOU /type:Custom /OU:"OU=Tanking,OU=Enheter,OU=Tertitten.no,DC=Tertitten,DC=no" 
+WDSUTIL /Set-Server /newMachineOU /type:Custom /OU:"OU=Tanking,OU=Enheter,OU=DP.local,DC=Tertitten,DC=no" 
 
 #sletter .wim filene igjen om ønsket.
 Remove-Item -path C:\BootAndInstall -Force -Confirm:$True

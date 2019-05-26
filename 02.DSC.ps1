@@ -1,19 +1,23 @@
-﻿function findInternetAdapter() {
+﻿<#
+    created by: Bjørn Wolstad
+    Credits: Fox Deploy
+#>
+function findInternetAdapter() {
     $Adapter = Get-NetAdapter
     return $Adapter[0].name;
 }
 
-$MachineName = "TittenDC01"
+$MachineName = "DP-DC01"
 $InternetAlias = findInternetAdapter
-$IP = '192.168.0.5'
+$IP = '172.31.7.5'
 $Subnet = '255.255.255.0'
 $SubnetMask = '24'
-$DGW = '192.168.0.1'
-$DHCP_StartRange = '192.168.0.50'
-$DHCP_EndRange = '192.168.0.120'
+$DGW = '172.31.7.1'
+$DHCP_StartRange = '172.31.7.50'
+$DHCP_EndRange = '172.31.7.120'
 $DHCP_LeaseDuration = '07.00:0:0' #D.HH:MM:SS
-$ScopeID = '192.168.0.0'
-$DomainName = "Tertitten.no"
+$ScopeID = '172.31.7.0'
+$DomainName = "DP.local"
 
 $secpasswd = ConvertTo-SecureString 'IWouldLikeToRecover!' -AsPlainText -Force
 $SafeModePW = New-Object System.Management.Automation.PSCredential ('guest', $secpasswd)
