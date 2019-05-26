@@ -144,7 +144,7 @@ Configuration ServerConf {
             LeaseDuration = $DHCP_LeaseDuration
             State = 'Active'
             AddressFamily = 'IPv4'
-            ScopeId = $ScopeID
+            # ScopeId = $ScopeID
         }
 
         xDhcpServerOption Option {
@@ -176,7 +176,7 @@ Configuration ServerConf {
             InterfaceAlias = $InternetAlias
             AddressFamily = 'IPv4'
             Validate = $true
-            Address = '172.31.7.1,1.1.1.1,9.9.9.9'
+            Address = '127.0.0.1','172.31.7.1','1.1.1.1','9.9.9.9'
         }
     }   
 }

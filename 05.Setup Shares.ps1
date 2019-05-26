@@ -1,11 +1,12 @@
 ﻿#Sharename     #Tilgang
-$smb_shares = ("HomeFolders", "DP.localGroup"), `
-("Administrasjon", "AdministrasjonGroup"), `
-("Interaksjonsdesign", "InteraksjonsdesignGroup"), `
-("Systemutvikling","SystemutviklingGroup"), `
-("Salg","SalgGroup"), `
-("Felles","DP.localGroup"),
-("Ledelse","LedelseGroup")
+$smb_shares = @()
+$smb_shares += @{"HomeFolders" = "DP.localGroup"}
+$smb_shares += @{"Administrasjon"= "AdministrasjonGroup"}
+$smb_shares += @{"Interaksjonsdesign"= "InteraksjonsdesignGroup"}
+$smb_shares += @{"Systemutvikling"="SystemutviklingGroup"}
+$smb_shares += @{"Salg"="SalgGroup"}
+$smb_shares += @{"Felles"="DP.localGroup"}
+$smb_shares += @{"Ledelse"="LedelseGroup"}
 
 #sjekker og stopper hvis Data disk ikke er tilstede
 $ErrorActionPreference = "stop"
@@ -40,9 +41,14 @@ function createShare($name, $permission) {
 }
 
 foreach($share in $smb_shares) {
-    $name = $share[0]
-    $permission = $share[1]
+    # $name = $share[0]
+    # $permission = $share[1]
+    $name = $share.Keys
+    $permission = $share.values
+    # $name
+    # $permission
 
-    echo $share[0]
+    $share[0]
     createShare -name $name -permission $permission
+    # Read-Host -Prompt "next"
 }
