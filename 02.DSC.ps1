@@ -55,7 +55,7 @@ Configuration ServerConf {
         )
     #$Password = (Get-Credential -UserName 'Nisse' -Message 'Enter New Password for $UserName')
 
-    $resources = 'xNetworking','xComputerManagement','xActiveDirectory','xDHCpServer','xSmbShare'
+    $resources = 'xNetworking','xComputerManagement','xActiveDirectory','xDHCpServer'#,'xSmbShare'
     Import-DscResource -module $resources
     # Import-DscResource -Module xNetworking
     # Import-DscResource -Module xComputerManagement
